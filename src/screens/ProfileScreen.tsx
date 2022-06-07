@@ -1,8 +1,10 @@
 import React from "react";
 
 // Components
-import { Image, Text, View, StyleSheet } from "react-native";
-import { Container, UserView, UserImage } from "./screenComponents";
+import { Text, View, StyleSheet } from "react-native";
+import { Container, UserView, UserImage, Row } from "./screenComponents";
+import { Feather } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 // Redux
 import { RootState } from "../redux/rootReducer";
@@ -17,10 +19,14 @@ export default function ProfileScreen() {
         <UserImage source={{ uri: postData.img }} />
         <Text style={styles.userName}>{postData.username}</Text>
       </UserView>
-      <Text style={styles.title}>{postData.name}</Text>
-      <View style={styles.postInfo}>
+      <Row>
+        <Entypo name="user" size={24} color="#d3aea5" style={styles.icon} />
+        <Text style={styles.title}>{postData.name}</Text>
+      </Row>
+      <Row>
+        <Feather name="mail" size={24} color="#d3aea5" style={styles.icon} />
         <Text>{postData.email}</Text>
-      </View>
+      </Row>
     </Container>
   );
 }
@@ -38,7 +44,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 18,
   },
-  postInfo: {
-    paddingVertical: 7,
+  icon: {
+    marginRight: 12,
   },
 });

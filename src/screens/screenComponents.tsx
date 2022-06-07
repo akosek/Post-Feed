@@ -7,6 +7,13 @@ export const Container = styled.View`
   padding-horizontal: 14px;
 `;
 
+export const Row = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px;
+`;
+
 export const UserView = styled.View`
   margin-top: 25px;
   justify-content: space-between;

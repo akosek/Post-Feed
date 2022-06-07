@@ -4,7 +4,7 @@ import { AppThunk, TPostDetails } from "../../../types";
 import { posts } from "../../../db.json";
 // For network connection
 import axios from "axios";
-import { POST_API, USER_API, POST_API_TEST } from "../../api";
+import { POST_API } from "../../api";
 
 // Action creators
 export const setPostList = createAction("setPostList/SET_POST_LIST")<

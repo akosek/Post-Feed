@@ -1,4 +1,6 @@
 import React from "react";
+
+// Components
 import { Image, Text, View, StyleSheet } from "react-native";
 import { Container, UserView } from "./screenComponents";
 
