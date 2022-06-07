@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, FlatList, ActivityIndicator } from "react-native";
 
-// For Network Call
-import axios from "axios";
-import { POST_API_TEST } from "../api";
-
 // Components
 import { View } from "../components/Themed";
 import PostCard from "../components/PostCard";
@@ -23,7 +19,6 @@ export default function HomeScreen() {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentLimit, setCurrentLimit] = useState<number>(10);
-  //const [data, setData] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -33,20 +28,6 @@ export default function HomeScreen() {
     dispatch(getPostsData(currentLimit));
     setIsLoading(false);
   };
-
-  // const fetchDataTest = async () => {
-  //   const options = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-  //   try {
-  //     const res = await axios.get(POST_API_TEST, options);
-  //     setData(res.data);
-  //   } catch (e) {
-  //     console.log(e.response);
-  //   }
-  // };
 
   const handleRefresh = () => {
     setIsLoading(true);
