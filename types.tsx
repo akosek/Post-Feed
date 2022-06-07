@@ -2,10 +2,13 @@
  * Learn more about using TypeScript with React Navigation:
  * https://reactnavigation.org/docs/typescript/
  */
+import { ThunkAction } from "redux-thunk";
 
-import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { CompositeScreenProps, NavigatorScreenParams } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { NavigatorScreenParams } from "@react-navigation/native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+
+import { RootState } from "./src/redux/rootReducer";
+import { Action } from "redux";
 
 declare global {
   namespace ReactNavigation {
@@ -14,22 +17,48 @@ declare global {
 }
 
 export type RootStackParamList = {
-  Root: NavigatorScreenParams<RootTabParamList> | undefined;
+  Home: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
+  Profile: undefined;
+  Post: undefined;
   NotFound: undefined;
 };
 
-export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
-  RootStackParamList,
-  Screen
->;
+export type RootStackScreenProps<
+  Screen extends keyof RootStackParamList
+> = NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
   TabOne: undefined;
-  TabTwo: undefined;
+  Post: undefined;
 };
 
-export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
-  BottomTabScreenProps<RootTabParamList, Screen>,
-  NativeStackScreenProps<RootStackParamList>
+export type TPostItem = {
+  id: number;
+  name: string;
+};
+
+export type TPostDetails = {
+  id: number;
+  body: string;
+  title: string;
+  username: string;
+  name: string;
+  img: string;
+  email: string;
+  adress: TUserAdress;
+};
+
+export type TUserAdress = {
+  street: string;
+  suite: string;
+  city: string;
+  zipcode: string;
+};
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
 >;
