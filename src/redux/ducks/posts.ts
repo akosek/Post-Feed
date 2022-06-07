@@ -1,5 +1,5 @@
 import { createAction, ActionType, getType } from "typesafe-actions";
-import { TPostItem, AppThunk, TPostDetails } from "../../../types";
+import { AppThunk, TPostDetails } from "../../../types";
 
 import { posts } from "../../../db.json";
 // For network connection
@@ -17,7 +17,6 @@ export const setOffset = createAction("setOffset/SET_OFFSET")<number>();
 export const setPostDetails = createAction("setPostDetails/SET_POST_DETAILS")<
   TPostDetails
 >();
-export const setUserData = createAction("setUserPhoto/SET_USER_DATA")<[]>();
 export const setDataLimit = createAction("setOffset/SET_DATA_LIMIT")<number>();
 
 const actionCreators = {
@@ -25,14 +24,12 @@ const actionCreators = {
   isFetchingPostList,
   setDataLimit,
   setPostDetails,
-  setUserData,
 };
 
 // Initial State
 export type TPostState = Readonly<{
   postList: TPostDetails[];
   isFetching: boolean;
-  userData: [];
   postDetails: TPostDetails;
   dataLimit: number;
 }>;
@@ -40,8 +37,21 @@ export type TPostState = Readonly<{
 const initialState: TPostState = {
   postList: [],
   isFetching: false,
-  userData: [],
-  postDetails: { id: 1, body: "", title: "", username: "", img: "" },
+  postDetails: {
+    id: 1,
+    name: "",
+    body: "",
+    title: "",
+    username: "",
+    img: "",
+    adress: {
+      street: "",
+      suite: "",
+      city: "",
+      zipcode: "",
+    },
+    email: "",
+  },
   dataLimit: 10,
 };
 
@@ -56,8 +66,6 @@ export default function reducer(
       return { ...state, postList: action.payload };
     case getType(isFetchingPostList):
       return { ...state, isFetching: action.payload };
-    case getType(setUserData):
-      return { ...state, userData: action.payload };
     case getType(setPostDetails):
       return { ...state, postDetails: action.payload };
     case getType(setDataLimit):
@@ -69,7 +77,7 @@ export default function reducer(
 }
 
 export const getPostsData = (dataLimit: number): AppThunk => {
-  return function (dispatch, getState) {
+  return function (dispatch) {
     dispatch(setPostList(posts.slice(0, dataLimit)));
 
     // Network Call
@@ -87,20 +95,6 @@ export const getPostsData = (dataLimit: number): AppThunk => {
     //   .catch((error) => {
     //     console.error(error);
     //   });
-  };
-};
-
-export const getUserData = (): AppThunk => {
-  return function (dispatch) {
-    let url = USER_API;
-    axios
-      .get(url)
-      .then((response) => {
-        dispatch(setUserData(response.data));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
   };
 };
 

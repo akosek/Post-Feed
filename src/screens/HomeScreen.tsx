@@ -13,18 +13,13 @@ import { Loader } from "./screenComponents";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
-import {
-  getPostsData,
-  getUserData,
-  setPostDetails,
-} from "../redux/ducks/posts";
+import { getPostsData, setPostDetails } from "../redux/ducks/posts";
 
 // Assets
 import { useNavigation } from "@react-navigation/native";
 
 export default function HomeScreen() {
   const postData = useSelector((state: RootState) => state.posts.postList);
-  const userData = useSelector((state: RootState) => state.posts.userData);
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [currentLimit, setCurrentLimit] = useState<number>(10);
@@ -36,7 +31,6 @@ export default function HomeScreen() {
     setIsLoading(true);
 
     dispatch(getPostsData(currentLimit));
-    dispatch(getUserData());
     setIsLoading(false);
   };
 
@@ -107,6 +101,7 @@ export default function HomeScreen() {
           onEndReachedThreshold={0.4}
           onEndReached={handleLoadMore}
           scrollEventThrottle={150}
+          initialNumToRender={10}
           keyExtractor={(item) => "item_" + item.id}
           data={postData}
           renderItem={renderItem}
